@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title>ПравоСправка — правовая база</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand" onclick="app.goHome()">
+      <div class="brand-mark">П</div>
+      <div><strong>ПравоСправка</strong><span>правовая информационная система</span></div>
+    </div>
+    <nav>
+      <button class="nav-btn active" data-view="home">Документы</button>
+      <button class="nav-btn" data-view="favorites">Избранное <span id="favCount"></span></button>
+      <button class="nav-btn" data-view="admin">Управление</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="homeView" class="view">
+      <div class="hero">
+        <div>
+          <div class="eyebrow">Федеральное законодательство</div>
+          <h1>Правовая база</h1>
+          <p>Поиск, просмотр и управление нормативными документами в едином интерфейсе.</p>
+        </div>
+        <div class="hero-stat"><b id="docCount">0</b><span>документов</span></div>
+      </div>
+
+      <div class="search-panel">
+        <input id="searchInput" type="search" placeholder="Поиск по названию, номеру, статье или тексту…">
+        <select id="typeFilter"><option value="">Все виды документов</option></select>
+        <select id="statusFilter"><option value="">Все статусы</option><option>Действует</option><option>Утратил силу</option></select>
+      </div>
+
+      <div class="layout">
+        <aside class="sidebar">
+          <h3>Разделы</h3>
+          <button class="category active" data-cat="">Все документы <span id="allCount"></span></button>
+          <button class="category" data-cat="Конституция">Конституция</button>
+          <button class="category" data-cat="Кодекс">Кодексы</button>
+          <button class="category" data-cat="Федеральный закон">Федеральные законы</button>
+          <button class="category" data-cat="Подзаконный акт">Подзаконные акты</button>
+        </aside>
+        <section>
+          <div class="results-head"><span id="resultLabel">Документы</span><button id="clearSearch" class="link-btn">Сбросить фильтры</button></div>
+          <div id="lawList" class="law-list"></div>
+          <div id="empty" class="empty hidden">По вашему запросу документы не найдены.</div>
+        </section>
+      </div>
+    </section>
+
+    <section id="favoritesView" class="view hidden">
+      <div class="page-head"><div><div class="eyebrow">Личная подборка</div><h1>Избранное</h1></div></div>
+      <div id="favoriteList" class="law-list"></div>
+    </section>
+
+    <section id="documentView" class="view hidden">
+      <div class="document-toolbar">
+        <button class="back-btn" onclick="app.goHome()">← К документам</button>
+        <div>
+          <button id="favoriteBtn" class="icon-btn"></button>
+          <button id="editBtn" class="secondary-btn">✎ Редактировать</button>
+        </div>
+      </div>
+      <article id="document"></article>
+    </section>
+
+    <section id="adminView" class="view hidden">
+      <div class="page-head">
+        <div><div class="eyebrow">Администрирование</div><h1>Управление базой</h1><p>Локальная база браузера. Для GitHub Pages изменения не записываются в репозиторий автоматически.</p></div>
+        <button class="primary-btn" onclick="app.newLaw()">＋ Новый документ</button>
+      </div>
+      <div class="admin-grid">
+        <div class="admin-card">
+          <h3>Импорт и экспорт</h3>
+          <p>Переносите собственную базу между браузерами или обновляйте `laws.json` в репозитории.</p>
+          <div class="actions"><button class="secondary-btn" onclick="app.exportDB()">Экспорт JSON</button><label class="secondary-btn file-label">Импорт JSON<input id="importFile" type="file" accept=".json"></label><button class="danger-btn" onclick="app.resetDB()">Сбросить локальные изменения</button></div>
+        </div>
+        <div class="admin-card">
+          <h3>Возможности</h3>
+          <ul><li>Создание документов</li><li>Редактирование текста</li><li>Статусы и категории</li><li>Поиск по всему содержимому</li><li>Избранное</li><li>История изменений в браузере</li></ul>
+        </div>
+      </div>
+      <div id="adminTable" class="admin-table"></div>
+    </section>
+  </main>
+
+  <footer><span>ПравоСправка</span><span>Демонстрационная правовая информационная система</span></footer>
+  <div id="modal" class="modal hidden"><div class="modal-box"><div class="modal-head"><h2 id="modalTitle">Документ</h2><button onclick="app.closeModal()">×</button></div><form id="lawForm"></form></div></div>
+  <script src="app.js"></script>
+</body>
+</html>
